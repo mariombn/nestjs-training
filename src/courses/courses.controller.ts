@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
-import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Res } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 
 @Controller('courses')
@@ -26,11 +25,10 @@ export class CoursesController {
     }
 
     @Post()
-    @HttpCode(HttpStatus.NO_CONTENT)
     create(
         @Body() body
     ) {
-        return body;
+        return this.courseService.create(body);
     }
 
     @Patch(':id')
@@ -38,13 +36,13 @@ export class CoursesController {
         @Param('id') id: string,
         @Body() body
     ) {
-        return `Atualização do curso Curso #${id}`;
+        return this.courseService.update(id, body);
     }
 
     @Delete(':id')
     delete(
         @Param('id') id: string
     ) {
-        return `Exclusão do Curso #${id}`;
+        return this.courseService.remove(id);
     }
 }
